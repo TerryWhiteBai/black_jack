@@ -73,6 +73,7 @@ class BlackjackGui:
 
             self.hit_button.config(state=tk.NORMAL)
             self.stand_button.config(state=tk.NORMAL)
+            self.bet_entry.config(state= tk.DISABLED)
             self.update_label()
 
             if self.money <= 0:
@@ -113,6 +114,7 @@ class BlackjackGui:
         self.dealer_label.config(text=f"Dealer's hand: {self.dealer_hand} Value {ruler(self.dealer_hand)}")
         self.hit_button.config(state= tk.DISABLED)
         self.stand_button.config(state=tk.DISABLED)
+        self.bet_entry.config(state= tk.NORMAL)
         self.benefit_label.config(text= f'Benefits: ${self.benefit}')
 
 if __name__ == "__main__":
