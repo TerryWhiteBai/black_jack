@@ -65,7 +65,7 @@ class BlackjackGui:
 
     def start_game(self):
         try:
-            self.money = int(re.findall(r'\d+', self.bet_entry.get())[0])
+            self.money = int(re.findall(r'$(\d+(?:\.\d+)?)', self.bet_entry.get())[0])
             self.deck= create_deck()
             random.shuffle(self.deck)
             self.player_hand= [self.deck.pop(), self.deck.pop()]
