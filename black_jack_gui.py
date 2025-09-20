@@ -65,7 +65,13 @@ class BlackjackGui:
 
     def start_game(self):
         try:
-            self.money = int(re.findall(r'$(\d+(?:\.\d+)?)', self.bet_entry.get())[0])
+            self.money = int(re.findall(r'-?\d+\.?\d*', self.bet_entry.get())[0])
+
+            if self.money <= 0:
+                raise ValueError
+        except (ValueError,IndexError) as e:
+            messagebox.showerror("Invalid Bet", "Please enter a positive integer for your bet.")
+        else:
             self.deck= create_deck()
             random.shuffle(self.deck)
             self.player_hand= [self.deck.pop(), self.deck.pop()]
@@ -74,13 +80,11 @@ class BlackjackGui:
             self.hit_button.config(state=tk.NORMAL)
             self.stand_button.config(state=tk.NORMAL)
             self.bet_entry.config(state= tk.DISABLED)
+            self.start_game_button.config(state= tk.DISABLED)
+            self.info_label.config(text= f"You bet ${self.money}.Good luck!")
             self.update_label()
 
-            if self.money <= 0:
-                raise ValueError
-        except (ValueError,IndexError) as e:
-            messagebox.showerror("Invalid Bet", "Please enter a positive integer for your bet.")
-        
+
     def update_label(self):
         self.player_label.config(text=f"Your hand {self.player_hand} Value {ruler(self.player_hand)}")
         self.dealer_label.config(text=f"Dealer's hand: {self.dealer_hand[1]} and [hidden]")
@@ -115,6 +119,7 @@ class BlackjackGui:
         self.hit_button.config(state= tk.DISABLED)
         self.stand_button.config(state=tk.DISABLED)
         self.bet_entry.config(state= tk.NORMAL)
+        self.start_game_button.config(state= tk.NORMAL)
         self.benefit_label.config(text= f'Benefits: ${self.benefit}')
 
 if __name__ == "__main__":
